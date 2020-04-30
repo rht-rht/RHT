@@ -1,0 +1,92 @@
+#MyCaptain Project Speech Recognition
+
+import speech_recognition as sr 
+import scipy.io.wavfile as wav 
+import numpy as np 
+import pyaudio
+import sounddevice as sd 
+from scipy.io.wavfile import write
+import wavio
+
+r= sr.Recognizer()
+
+
+
+def Eng():
+
+	print("Say Something....")
+	fs=44100
+	seconds=5
+	my_np_array = sd.rec(int(seconds*fs), samplerate=fs, channels=2)   
+	sd.wait()
+	wavio.write("output.wav", my_np_array, fs, sampwidth=2)
+
+	with sr.AudioFile('output.wav') as source:
+			audio_data= r.record(source)
+			try:
+				text= r.recognize_google(audio_data, language="en-GB")
+				return (text)
+			except sr.UnknownValueError:
+				print ("Sorry I didnt get that")
+			except sr.RequestError:
+				print ("Sorry, my speech service is down")
+def Spa():
+
+	print("Di algo....")
+	fs=44100
+	seconds=5
+	my_np_array = sd.rec(int(seconds*fs), samplerate=fs, channels=2)    
+	sd.wait()
+	wavio.write("output.wav", my_np_array, fs, sampwidth=2)
+
+	with sr.AudioFile('output.wav') as source:
+			audio_data= r.record(source)
+			try:
+				text= r.recognize_google(audio_data, language="es-ES")
+				return (text)
+			except sr.UnknownValueError:
+				print ("Sorry I didnt get that")
+			except sr.RequestError:
+				print ("Sorry, my speech service is down")	
+def Fre():
+	print("dis quelquechose....")
+	fs=44100
+	seconds=5
+	my_np_array = sd.rec(int(seconds*fs), samplerate=fs, channels=2)       
+	sd.wait()
+	wavio.write("output.wav", my_np_array, fs, sampwidth=2)
+
+	with sr.AudioFile('output.wav') as source:
+			audio_data= r.record(source)
+			try:
+				text= r.recognize_google(audio_data, language="fr-FR")
+				return (text)
+			except sr.UnknownValueError:
+				print ("Sorry I didnt get that")
+			except sr.RequestError:
+				print ("Sorry, my speech service is down")
+print("Language.")
+print("1.English")
+print("2.Spanish")
+print("3.French")
+lang= input("Enter the choice:")
+print('\n')
+if lang == '1':
+	print("Speech to text is: ", Eng())
+if lang == '2':
+	print("Speech to text is:", Spa())
+if lang == '3':
+	print("Speech to text is:", Fre())
+
+
+print('\n')
+
+mysp=__import__("my-voice-analysis")                
+p="output.wav" 
+c=r"C:\Users\USER\Desktop\FaceReg\myspsolution.praat" # Path to the Audio_File directory (Python 3.7)
+print("Just a momment....")
+print('\n')
+sd.wait()
+print("Gender is:")
+
+mysp.myspgend(p,c)
